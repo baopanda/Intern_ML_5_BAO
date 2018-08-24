@@ -31,8 +31,13 @@ def main():
     data, label = load_data()
     X_train, X_valid, y_train, y_valid = train_test_split(data, label, test_size=0.2, random_state=50) #spilit data ra để train và test
 
+    #Convert Ham,Spam về định dạng số
     vectorizer = CountVectorizer() #chuyen doi dinh dang text thanh vector
+    # Cách transform thế này: mình có một mảng các string,
+    # mình sẽ transform mảng này sao mỗi string sẽ chuyển đổi thành 1 vector có độ dài d (số từ xuất hiện ít nhất 1 lần),
+    # giá trị của thành phần thứ i trong vector chính là số lần từ đó xuất hiện trong string.
     transformed_x_train = vectorizer.fit_transform(X_train).toarray() #chuyển X_train về dạng array
+    print(vectorizer.get_feature_names()) #Đó chính là các từ xuất hiện ít nhất 1 lần trong tất cả các string
     trainVocab = vectorizer.vocabulary_ #export tập từ vựng
     vectorizer = CountVectorizer(vocabulary=trainVocab)
     transformed_x_valid = vectorizer.fit_transform(X_valid).toarray() #chuyển X_valid về dạng array
@@ -45,6 +50,8 @@ def main():
     print('Training size = %d, accuracy = %.2f%%' % \
           (len(X_train), accuracy_score(y_valid, y_pred) * 100))
 
+
+    #Thử áp dụng Grid_Search để xem có tăng độ chính xác không!
     params = {'alpha': [0.5, 0.6, 0.7, 0.8, 0.9, 1, 1.1, 1.2, 1.3, 1.4]}
     clf = MultinomialNB()
     clf = GridSearchCV(clf, params, cv=5)
