@@ -6,19 +6,56 @@ Tin nhắn rác (spam) thực sự là một vấn đề khó chịu đối vớ
 
 ## 2.Xác định bài toán
 
-	• Input: Tập văn bản mail tiếng việt và có gán nhãn spam or ham (File DataTrain 80 văn bản)
-	• Output: Với mỗi văn bản phải xác định loại của văn bản đó là ham or spam (File DataTest 20 văn bản) 
+* Input: Tập văn bản mail tiếng việt và có gán nhãn spam or ham (File DataTrain 80 văn bản)
+* Output: Với mỗi văn bản phải xác định loại của văn bản đó là ham or spam (File DataTest 20 văn bản) 
 
 ## 3. Khám phá dữ liệu
 
-        • Đây là văn bản tiếng việt nên cần phải tách từ tiếng việt.
-        • Số lượng file spam và hàm trong file train đã cân bằng.
+* Đây là văn bản tiếng việt nên cần phải tách từ tiếng việt.
+* Số lượng file spam và hàm trong file train đã cân bằng.
 
 ## 4.Giải quyết bài toán 
 
 ### 4.1. Tiền xử lý dữ liệu
 
-      4.1.1.Tách từ tiếng việt
-      Sử dụng tool pyvi để tách từ tiếng việt 
+* Sử dụng tool pyvi để tách từ tiếng việt 
+* Tách Data và Nhãn ra riêng biệt để phục vụ cho quá trình training
+<img src="https://i.imgur.com/tqSQ21U.png">
 	
-	
+### 4.2. Chia dữ liệu train và validation
+* Do dữ liệu a gửi chỉ có 1 file nên e sẽ chia file đó ra 80% để train và 20% để test
+<img src="https://i.imgur.com/smhWYq7.png">
+
+### 4.3. Bắt đầu training 
+* Ở đây có một vấn đề, các giải thuật Machine Learning chỉ làm việc được với số, nên mình sẽ convert "ham", "spam" và cả các sms về định dạng số. Bắt đầu với "ham" (tương ứng với số 0) và "spam" (tương ứng với số 1). 
+* Tiếp theo, ta sẽ transform sms messages thành dạng số ( dùng module mà scikit learn cung cấp ). Module mà scikit learn cung cấp cho phép chuyển đổi định dạng text thành vector, mình sẽ import CountVectorizer và transform text thành vector. Cách transform thế này: mình có một mảng các string, mình sẽ transform mảng này sao mỗi string sẽ chuyển đổi thành 1 vector có độ dài d (số từ xuất hiện ít nhất 1 lần), giá trị của thành phần thứ i trong vector chính là số lần từ đó xuất hiện trong string. 
+* Sau đó, Ta sẽ import Naive Bayes, fit rồi predict là xong. 
+<img src="https://i.imgur.com/BxwzfZm.png">
+* Kết quả: 
+<img src="https://i.imgur.com/LrsHzjQ.png">
+
+## 5.Các cách để nâng cao accurancy bài toán. 
+Ta có thể thấy accurancy chỉ đạt 85% có thể do nhiều lý do và có 1 số cách để raise nó lên như sau: 
+
+1. Do data train quá ít nên kết quả chưa ra đc accurancy cao. Chúng ta nên tăng thêm data train cho nó
+
+2.Apply grid search với MultinomialNB để tăng accurancy. Param mà mình apply Grid Search ở đây là alpha, người ta thêm nó vào cải thiện độ chính xác.
+ <img src="https://i.imgur.com/I0HuPMU.png">
+ 
+Nhưng kết quả cho ra k tăng lên (ta in ra best_param và kết quả của nó) :
+<img src="https://i.imgur.com/XnEHoYl.png">
+
+## 6.Cơ sở lý thuyết
+Thuật toán mình dùng trong bài này là Naive Bayes.
+
+Lý thuyết Bayes thì có lẽ không còn quá xa lạ với chúng ta nữa rồi. Nó chính là sự liên hệ giữa các xác suất có điều kiện. Điều đó gợi ý cho chúng ta rằng chúng ta có thể tính toán một xác suất chưa biết dựa vào các xác suất có điều kiện khác. Thuật toán Naive Bayes cũng dựa trên việc tính toán các xác suất có điều kiện đó. Nghe tên thuật toán là đã thấy gì đó ngây ngô rồi. Tại sao lại là Naive nhỉ. Không phải ngẫu nhiên mà người ta đặt tên thuật toán này như thế. Tên gọi này dựa trên một giả thuyết rằng các chiều của dữ liệu X=(x_1, x_2, ...., x_n)X=(x 
+1
+​	
+ ,x 
+2
+​	
+ ,....,x 
+n
+​	
+ ) là độc lập về mặt xác suất với nhau. 
+ <img src="https://viblo.asia/uploads/a468626e-0831-4efb-b4be-537f5329f050.png"> Chúng ta có thể thấy rằng giả thuyết này có vẻ khá ngây thơ vì trên thực tế điều này có thể nói là không thể xảy ra tức là chúng ta rất ít khi tìm được một tập dữ liệu mà các thành phần của nó không liên quan gì đến nhau. Tuy nhiên, giả thiết ngây ngô này lại mang lại những kết quả tốt bất ngờ. Giả thiết về sự độc lập của các chiều dữ liệu này được gọi là Naive Bayes (xin phép không dịch). Cách xác định class của dữ liệu dựa trên giả thiết này có tên là Naive Bayes Classifier (NBC). Tuy nhiên dựa vào giả thuyết này mà bước training và testing trở nên vô cùng nhanh chóng và đơn giản. Chúng ta có thể sử dụng nó cho các bài toán large-scale. Trên thực tế, NBC hoạt động khá hiệu quả trong nhiều bài toán thực tế, đặc biệt là trong các bài toán phân loại văn bản, ví dụ như lọc tin nhắn rác hay lọc email spam. 
