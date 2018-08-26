@@ -1,12 +1,19 @@
-Cơ Sở Lý Thuyết
-Thuật toán mình dùng trong bài này là Naive Bayes. 
-Các bạn có thể đọc thêm về cơ sở lý thuyết tại đây: machinelearningcoban.com 
-Mình sẽ chỉ giải thích một cách đơn giản nhất, đủ để bạn hiểu những gì mình đã làm ở trên. 
-Bài toán đặt ra ở đây là xác định xác suất để một điểm dữ liệu x bất kì rơi vào các class 1, 2, 3, ... C. 
-Hay chính xác là đi tính p(y = c|x) p(y=c∣x) Nói riêng về ứng dụng và bài toán mình đề cập ở trên. 
-Mục tiêu ở đây, ví dụ với một string là "Tối nay có ăn tối không em". 
-Chúng ta sẽ tách string này thành từng từ riêng biệt: "Tối", "nay", "có", ăn", "tối", "không", "em". 
-Làm trương tự vậy với tất cả string. Và ta sẽ tính xác xuất trên tất cả các string với mỗi từ. 
-Cứ hiểu đơn giản ở đây, là từ nào xuất hiện càng nhiều trong các tin nhắn được gán nhãn "ham" thì khi một tin nhắn chưa được gán nhãn chứa từ đấy.
-Xác suất nó là tin nhắn "ham" càng cao. 
-Tương tự vậy với các từ trong sms "spam".
+﻿Bài Toán Spam-Filtering
+
+1.Giới thiệu bài toán
+Tin nhắn rác (spam) thực sự là một vấn đề khó chịu đối với người sử dụng điện thoại di động. Bài viết này chúng ta sẽ áp dụng một thuật toán phân loại đơn giản có tên là Naive Bayes classifier dựa trên công thức xác suất Bayes có ở tất cả các giáo trình thống kê cơ bản để xây dựng một cỗ máy phân loại tin nhắn rác.
+
+2.Xác định bài toán
+• Input: Tập văn bản mail tiếng việt và có gán nhãn spam or ham (File DataTrain 80 văn bản)
+• Output: Với mỗi văn bản phải xác định loại của văn bản đó là ham or spam (File DataTest 20 văn bản) 
+
+3. Khám phá dữ liệu
+• Đây là văn bản tiếng việt nên cần phải tách từ tiếng việt.
+• Số lương file spam và ham trong file train đã cân bằng.
+
+4.Giải quyết bài toán 
+
+4.1. Tiền xử lý dữ liệu
+
+      4.1.1.Tách từ tiếng việt
+      Sử dụng tool pyvi để tách từ tiếng việt 
