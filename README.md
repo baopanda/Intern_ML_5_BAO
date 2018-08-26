@@ -11,8 +11,8 @@ Tin nhắn rác (spam) thực sự là một vấn đề khó chịu đối vớ
 
 3. Khám phá dữ liệu
 
-	• Đây là văn bản tiếng việt nên cần phải tách từ tiếng việt.
-	• Số lương file spam và ham trong file train đã cân bằng.
+        • Đây là văn bản tiếng việt nên cần phải tách từ tiếng việt.
+        • Số lượng file spam và hàm trong file train đã cân bằng.
 
 4.Giải quyết bài toán 
 
