@@ -1,5 +1,7 @@
-import pandas as pd
-import numpy as np
+import string
+
+from nltk import WordNetLemmatizer, PorterStemmer, word_tokenize
+from nltk.corpus import stopwords
 from pyvi import ViTokenizer
 from sklearn.feature_extraction.text import CountVectorizer
 from sklearn.grid_search import GridSearchCV
@@ -26,19 +28,17 @@ def load_data():
     # print(label)
     return data, label
 
-
 def main():
+
     data, label = load_data()
     X_train, X_valid, y_train, y_valid = train_test_split(data, label, test_size=0.2, random_state=50) #spilit data ra để train và test
 
-    #Convert Ham,Spam về định dạng số
-    vectorizer = CountVectorizer() #chuyen doi dinh dang text thanh vector
-    # Cách transform thế này: mình có một mảng các string,
-    # mình sẽ transform mảng này sao mỗi string sẽ chuyển đổi thành 1 vector có độ dài d (số từ xuất hiện ít nhất 1 lần),
-    # giá trị của thành phần thứ i trong vector chính là số lần từ đó xuất hiện trong string.
+    vectorizer = CountVectorizer()#chuyen doi dinh dang text thanh vector
     transformed_x_train = vectorizer.fit_transform(X_train).toarray() #chuyển X_train về dạng array
-    print(vectorizer.get_feature_names()) #Đó chính là các từ xuất hiện ít nhất 1 lần trong tất cả các string
+    # print(vectorizer.get_feature_names()) #Đó chính là các từ xuất hiện ít nhất 1 lần trong tất cả các string
     trainVocab = vectorizer.vocabulary_ #export tập từ vựng
+    # print(len(trainVocab))
+
     vectorizer = CountVectorizer(vocabulary=trainVocab)
     transformed_x_valid = vectorizer.fit_transform(X_valid).toarray() #chuyển X_valid về dạng array
     best_clf = MultinomialNB()
