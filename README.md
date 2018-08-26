@@ -2,7 +2,7 @@
 
 1.Giới thiệu bài toán
 
-	Tin nhắn rác (spam) thực sự là một vấn đề khó chịu đối với người sử dụng điện thoại di động. Bài viết này chúng ta sẽ áp dụng một thuật toán phân loại đơn giản có tên là Naive Bayes classifier dựa trên công thức xác suất Bayes có ở tất cả các giáo trình thống kê cơ bản để xây dựng một cỗ máy phân loại tin nhắn rác.
+Tin nhắn rác (spam) thực sự là một vấn đề khó chịu đối với người sử dụng điện thoại di động. Bài viết này chúng ta sẽ áp dụng một thuật toán phân loại đơn giản có tên là Naive Bayes classifier dựa trên công thức xác suất Bayes có ở tất cả các giáo trình thống kê cơ bản để xây dựng một cỗ máy phân loại tin nhắn rác.
 
 2.Xác định bài toán
 
