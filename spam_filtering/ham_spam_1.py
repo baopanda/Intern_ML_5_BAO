@@ -1,17 +1,38 @@
+import re
 import string
 
+import nltk
 from nltk import WordNetLemmatizer, PorterStemmer, word_tokenize
 from nltk.corpus import stopwords
 from pyvi import ViTokenizer
+from sklearn.base import BaseEstimator, TransformerMixin
 from sklearn.feature_extraction.text import CountVectorizer
 from sklearn.grid_search import GridSearchCV
 from sklearn.metrics import accuracy_score
 from sklearn.model_selection import train_test_split
 from sklearn.naive_bayes import MultinomialNB
 
+patterns = {
+    '[àáảãạăắằẵặẳâầấậẫẩ]': 'a',
+    '[đ]': 'd',
+    '[èéẻẽẹêềếểễệ]': 'e',
+    '[ìíỉĩị]': 'i',
+    '[òóỏõọôồốổỗộơờớởỡợ]': 'o',
+    '[ùúủũụưừứửữự]': 'u',
+    '[ỳýỷỹỵ]': 'y'
+}
+
+def convert(text):
+    output = text
+    for regex, replace in patterns.items():
+        output = re.sub(regex, replace, output)
+        # deal with upper case
+        output = re.sub(regex.upper(), replace.upper(), output)
+    return output
+
 #Load Data và chia data và label riêng
-def load_data():
-    with open("train.txt", 'r', encoding="latin-1") as f:
+def load_data(path):
+    with open(path, 'r', encoding="utf-8") as f:
         lines = f.readlines()
 
     data = []
@@ -21,19 +42,42 @@ def load_data():
         line = line.strip()
         splitted_line = line.split(None, 1)
         label.append(int(splitted_line[0]))
-        data.append(ViTokenizer.tokenize(splitted_line[1]))
+        data1 = ViTokenizer.tokenize(splitted_line[1])
+        data1 = convert(data1)
+        # print(data1)
+        data.append(data1)
 
-    print("Read file {} done : {} lines".format("train.txt", len(data)))
+        # data.append(nltk.word_tokenize(splitted_line[1]))
+        # data.append(splitted_line[1])
+
+    print("Read file {} done : {} lines".format(path, len(data)))
     # print(data)
     # print(label)
     return data, label
 
+wordnet_lemmatizer = WordNetLemmatizer()
+def stemming_tokenizer(text):
+    stemmer = PorterStemmer()
+    return [stemmer.stem(w) for w in word_tokenize(text)]
+
 def main():
+    train = "train.txt"
+    test_ham = "ham_test.txt"
+    test_spam = "spam_test.txt"
+    test_all = "test.txt"
 
-    data, label = load_data()
-    X_train, X_valid, y_train, y_valid = train_test_split(data, label, test_size=0.2, random_state=50) #spilit data ra để train và test
+    # data, label = load_data(train)
+    # X_train, X_valid, y_train, y_valid = train_test_split(data, label, test_size=0.2, random_state=50) #spilit data ra để train và test
+    X_train,y_train = load_data(train)
+    X_valid,y_valid = load_data(test_ham)
 
-    vectorizer = CountVectorizer()#chuyen doi dinh dang text thanh vector
+
+    # vectorizer = CountVectorizer()#chuyen doi dinh dang text thanh vector
+    vectorizer = CountVectorizer(
+        tokenizer=stemming_tokenizer,
+        # stop_words=stopwords.words('vietnam') + list(string.punctuation) + list(string.whitespace)
+        stop_words=stopwords.words('english') + list(string.punctuation)
+    )
     transformed_x_train = vectorizer.fit_transform(X_train).toarray() #chuyển X_train về dạng array
     # print(vectorizer.get_feature_names()) #Đó chính là các từ xuất hiện ít nhất 1 lần trong tất cả các string
     trainVocab = vectorizer.vocabulary_ #export tập từ vựng
