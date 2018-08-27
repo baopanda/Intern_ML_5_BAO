@@ -19,14 +19,12 @@ Tin nhắn rác (spam) thực sự là một vấn đề khó chịu đối vớ
 ### 4.1. Tiền xử lý dữ liệu
 
 * Sử dụng tool pyvi để tách từ tiếng việt 
+* Chúng ta phải loại bỏ hết dấu câu để quá trình lọc spam-ham được chính xác. Nhận thấy, trong tiếng việt, chỉ đánh dấu vào các chứ cái a,d,e,i,o,u,y nên ta sẽ cần loại bỏ dấu trong các chữ này (ở chữ d là trong trường hợp đ). 
+<img src="https://sv1.uphinhnhanh.com/images/2018/08/27/Capture99a3b.png">
 * Tách Data và Nhãn ra riêng biệt để phục vụ cho quá trình training
 <img src="https://i.imgur.com/tqSQ21U.png">
-	
-### 4.2. Chia dữ liệu train và validation
-* Do dữ liệu a gửi chỉ có 1 file nên e sẽ chia file đó ra 80% để train và 20% để test
-<img src="https://i.imgur.com/smhWYq7.png">
 
-### 4.3. Bắt đầu training 
+### 4.2. Bắt đầu training 
 * Ở đây có một vấn đề, các giải thuật Machine Learning chỉ làm việc được với số, nên mình sẽ convert "ham", "spam" và cả các sms về định dạng số. Bắt đầu với "ham" (tương ứng với số 0) và "spam" (tương ứng với số 1). 
 * Tiếp theo, ta sẽ transform sms messages thành dạng số ( dùng module mà scikit learn cung cấp ). Module mà scikit learn cung cấp cho phép chuyển đổi định dạng text thành vector, mình sẽ import CountVectorizer và transform text thành vector. Cách transform thế này: mình có một mảng các string, mình sẽ transform mảng này sao mỗi string sẽ chuyển đổi thành 1 vector có độ dài d (số từ xuất hiện ít nhất 1 lần), giá trị của thành phần thứ i trong vector chính là số lần từ đó xuất hiện trong string. 
 * Sau đó, Ta sẽ import Naive Bayes, fit rồi predict là xong. 
