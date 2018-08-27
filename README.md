@@ -80,4 +80,5 @@ là
 một vector đặc trưng biểu diễn cho nội dung thư và yi là nhãn
 phân loại đối với dữ liệu huấn luyện. Tương tự như phần phân
 loại Bayes, giá trị xi có thể là 0 hoặc 1. 
+
  <img src="https://sv1.uphinhnhanh.com/images/2018/08/27/Capture6ffdb.png"> 
