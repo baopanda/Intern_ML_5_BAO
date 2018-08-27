@@ -68,3 +68,16 @@ n
 ​	
  ) là độc lập về mặt xác suất với nhau. 
  <img src="https://viblo.asia/uploads/a468626e-0831-4efb-b4be-537f5329f050.png"> Chúng ta có thể thấy rằng giả thuyết này có vẻ khá ngây thơ vì trên thực tế điều này có thể nói là không thể xảy ra tức là chúng ta rất ít khi tìm được một tập dữ liệu mà các thành phần của nó không liên quan gì đến nhau. Tuy nhiên, giả thiết ngây ngô này lại mang lại những kết quả tốt bất ngờ. Giả thiết về sự độc lập của các chiều dữ liệu này được gọi là Naive Bayes (xin phép không dịch). Cách xác định class của dữ liệu dựa trên giả thiết này có tên là Naive Bayes Classifier (NBC). Tuy nhiên dựa vào giả thuyết này mà bước training và testing trở nên vô cùng nhanh chóng và đơn giản. Chúng ta có thể sử dụng nó cho các bài toán large-scale. Trên thực tế, NBC hoạt động khá hiệu quả trong nhiều bài toán thực tế, đặc biệt là trong các bài toán phân loại văn bản, ví dụ như lọc tin nhắn rác hay lọc email spam. 
+ 
+ 
+ Vài nét về thuật toán SVM
+ 
+ Áp dụng SVM trong phân loại thư rác
+Đối với bài toán phân loại rác, giống như phần phân
+loại Bayes (mục 2.1.3), thuật toán SVM xem mỗi vector i
+xi
+là
+một vector đặc trưng biểu diễn cho nội dung thư và yi là nhãn
+phân loại đối với dữ liệu huấn luyện. Tương tự như phần phân
+loại Bayes, giá trị xi có thể là 0 hoặc 1. 
+ <img src="https://sv1.uphinhnhanh.com/images/2018/08/27/Capture6ffdb.png"> 
