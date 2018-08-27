@@ -43,6 +43,17 @@ Ta có thể thấy accurancy chỉ đạt 85% có thể do nhiều lý do và c
 Nhưng kết quả cho ra k tăng lên (ta in ra best_param và kết quả của nó) :
 <img src="https://i.imgur.com/XnEHoYl.png">
 
+3.Ta nhận thấy, có vẻ như thuật toán NaiveBayes cho ta kết quả không được cao và một số tài liệu trên mạng có suggest thuật toán SVM cho bài toán lọc thư rác với một kết quả tốt hơn nên chúng ta sẽ test với thuật toán này với dữ liệu ham và spam riêng. 
+
+<img src="https://sv1.uphinhnhanh.com/images/2018/08/27/Capturef7024.png">
+
+Kết quả có raise lên nhưng có vẻ chưa đc như ý mình muốn:  <img src="https://sv1.uphinhnhanh.com/images/2018/08/27/Capture4cc2b.png">
+
+Có vẻ như chúng ta lại phải tinh chỉnh mô hình thêm để tăng thêm accurancy rồi.Có lẽ các param1 và 2 trong GridSearch chưa khớp nhau rùi. Ta thử tham số C thành  "C": [0.50,0.51,0.52,0.53,0.54,0.55] xem sao. 
+Thật đáng ngạc nhiên, Accurancy lên cao lên tương đối: 
+<img src="https://sv1.uphinhnhanh.com/images/2018/08/27/Capturea72a4.png">
+
+
 ## 6.Cơ sở lý thuyết
 Thuật toán mình dùng trong bài này là Naive Bayes.
 
