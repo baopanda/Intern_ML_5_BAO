@@ -34,7 +34,7 @@ def convert(text):
 
 #Load Data và chia data và label riêng
 def load_data(path):
-    with open(path, 'r', encoding="utf-8") as f:
+    with open(path, 'r', encoding='latin-1') as f:
         lines = f.readlines()
 
     data = []
